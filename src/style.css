@@ -1,8 +1,42 @@
 body {
-  background-color: gray;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.hello {
-  color: pink;
-  background-color: green;
+h3 {
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
+
+input {
+  padding: 0.5rem 1rem;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
+  width: 75%;
+}
+
+#list-elem {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-element {
+  border: 1px solid gray;
+  padding: 0.5rem 1rem;
+}
+
+span {
+  padding: 0 0.5rem;
+}
+
+.delete-button {
+  width: 100%;
+  padding: 1rem;
+  color: rgb(110, 109, 109);
+  font-size: large;
 }
