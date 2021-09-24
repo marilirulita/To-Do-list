@@ -35,7 +35,7 @@ function showItems() {
   deleteButton.classList.add('delete-button');
   deleteButton.innerText = 'Clear all completed';
   deleteButton.type = 'button';
-  listElement.appendChild(deleteButton);
+  listItems.appendChild(deleteButton);
 
   return listItems;
 }
