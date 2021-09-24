@@ -1,7 +1,7 @@
-import _ from 'lodash';
+//import _ from 'lodash';
 import './style.css';
 
-let tasksList = []; //array of objects
+const tasksList = [];
 let ids = 0;
 
 function Task(description, completed, index) {
@@ -10,16 +10,15 @@ function Task(description, completed, index) {
   this.index = index;
 }
 
-tasksList.push(new Task("homework", false, ids++));
-tasksList.push(new Task("clean", false, ids++));
-tasksList.push(new Task("read", false, ids++));
+tasksList.push(new Task('homework', false, (ids++)));
+tasksList.push(new Task('clean', false, (ids++)));
+tasksList.push(new Task('read', false, (ids += 1)));
 
-console.log(tasksList);
 
 function showItems() {
   const listItems = document.getElementById('list-elem');
   
-  for (let i = 0; i < tasksList.length; i++) {
+  for (let i = 0; i < tasksList.length; i += 1) {
     const taskElement = document.createElement('div');
 
     const descriptionElem = document.createElement('span');
@@ -45,20 +44,20 @@ function showItems() {
 const listElement = document.getElementById('list-elem');
 listElement.appendChild(showItems());
 
-function add() {
-  const task = document.getElementById('new-task');
+// function add() {
+ // const task = document.getElementById('new-task');
 
-  const newTask = new Task(task.value, false, ids);
+  // const newTask = new Task(task.value, false, ids);
 
-  ids += 1;
+  // ids += 1;
 
-  tasksList.push(newTask);
-}
+  // tasksList.push(newTask);
+// }
 
-//const taskInput = document.getElementById("new-task");
+// const taskInput = document.getElementById("new-task");
 
-//taskInput.addEventListener("keyup", function(event) {
+// taskInput.addEventListener("keyup", function(event) {
 //  if (event.characterCode == 13) {
 //    add();
 //  }
-//});
+// });
