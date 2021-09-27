@@ -18,11 +18,11 @@ tasksList.push(new Task('read', false, (ids += 1)));
 const listItems = document.getElementById('list-elem');
 
 const showItems = () => {
-  for (let i = 0; i < tasksList.length; i += 1) {
+  tasksList.forEach((task) => {
     const taskElement = document.createElement('div');
 
     const descriptionElem = document.createElement('span');
-    descriptionElem.innerText = tasksList[i].description;
+    descriptionElem.innerText = task.description;
     const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
 
@@ -30,7 +30,7 @@ const showItems = () => {
     taskElement.appendChild(checkBox);
     taskElement.appendChild(descriptionElem);
     listItems.appendChild(taskElement);
-  }
+  });
 
   const deleteButton = document.createElement('button');
   deleteButton.classList.add('delete-button');
@@ -41,5 +41,4 @@ const showItems = () => {
   return listItems;
 }
 
-const listElement = document.getElementById('list-elem');
-listElement.appendChild(showItems());
+listItems.appendChild(showItems());
