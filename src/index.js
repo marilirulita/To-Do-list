@@ -8,7 +8,7 @@ class Task {
     this.description = description;
     this.completed = completed;
     this.index = index;
-  } 
+  }
 }
 
 tasksList.push(new Task('homework', false, (ids += 1)));
@@ -39,6 +39,6 @@ const showItems = () => {
   listItems.appendChild(deleteButton);
 
   return listItems;
-}
+};
 
 listItems.appendChild(showItems());
