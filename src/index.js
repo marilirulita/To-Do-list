@@ -41,4 +41,4 @@ const showItems = () => {
   return listItems;
 };
 
-listItems.appendChild(showItems());
+showItems();
