@@ -19,10 +19,10 @@ const completedTask = (id, status) => {
 const addCheck = (list) => {
   const checkboxes = document.querySelectorAll('input[name="listElem"]');
   checkboxes.forEach((checks) => {
-    checks.addEventListener('change', function (event) {
+    checks.onchange = function func() {
       statusCompleted(list, checks.id, this.checked);
       completedTask(checks.id, this.checked);
-    });
+    };
   });
 };
 

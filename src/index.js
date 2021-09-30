@@ -47,7 +47,7 @@ const showItems = () => {
   return listItems;
 };
 
-window.onload = (event) => {
+window.onload = () => {
   const local = window.localStorage.getItem('tasklist');
   if (local != null) {
     tasksList = JSON.parse(local);
