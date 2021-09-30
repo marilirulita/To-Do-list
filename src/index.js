@@ -61,6 +61,6 @@ const showItems = () => {
   listItems.appendChild(deleteButton);
 
   addCheck(tasksList);
-  
+
   return listItems;
 };
