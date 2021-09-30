@@ -1,5 +1,5 @@
 import './style.css';
-import {addCheck} from './status'; 
+import addCheck from './status.js';
 
 let tasksList = [];
 
@@ -15,24 +15,6 @@ function saveList() {
   window.localStorage.setItem('tasklist', JSON.stringify(tasksList));
 }
 
-window.onload = (event) => {
-  const local = window.localStorage.getItem('tasklist');
-  if (local != null) {
-    tasksList = JSON.parse(local);
-    showItems();
-  }
-};
-
-let textBox = document.getElementById('new-task');
-textBox.addEventListener('keypress', (event) => {
-  if(event.key === "Enter" && textBox.value !== '') {
-    tasksList.push(new Task(textBox.value, false, Date.now()));
-    textBox.value = "";
-    showItems();
-    saveList()
-  }
-});
-
 const listItems = document.getElementById('list-elem');
 
 const showItems = () => {
@@ -42,11 +24,11 @@ const showItems = () => {
 
     const descriptionElem = document.createElement('span');
     descriptionElem.innerText = task.description;
-    descriptionElem.id = "id" + task.index ;
+    descriptionElem.id = `id${task.index}`;
     const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
     checkBox.id = task.index;
-    checkBox.name = "listElem";
+    checkBox.name = 'listElem';
 
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
@@ -64,3 +46,21 @@ const showItems = () => {
 
   return listItems;
 };
+
+window.onload = (event) => {
+  const local = window.localStorage.getItem('tasklist');
+  if (local != null) {
+    tasksList = JSON.parse(local);
+    showItems();
+  }
+};
+
+const textBox = document.getElementById('new-task');
+textBox.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter' && textBox.value !== '') {
+    tasksList.push(new Task(textBox.value, false, Date.now()));
+    textBox.value = '';
+    showItems();
+    saveList();
+  }
+});
