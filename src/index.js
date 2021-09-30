@@ -75,11 +75,11 @@ const showItems = () => {
 showItems();
 
 // **************************************
-// code for add an event listener to check
+// code for change checked value in array using checkbox
 function checkChange(id) {
   const check = document.getElementById(id);
   check.addEventListener('change',function(event) { 
-    statusCompleted(tasksList, id, true);
+    statusCompleted(tasksList, id, this.checked);
     console.log(tasksList);
    });
 }
@@ -89,3 +89,5 @@ function checkChange(id) {
     checkChange(checks.id);
   });
   
+  // *********************************************
+  // code for pass a line trow text of list element

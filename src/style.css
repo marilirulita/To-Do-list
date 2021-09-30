@@ -46,3 +46,15 @@ span {
   color: rgb(110, 109, 109);
   font-size: large;
 }
+
+/* checked checkbox style*/
+.checked {
+  background: blue;
+  font-size: large;
+}
+
+input[type="checkbox"]:checked::after {
+  /* Heres your symbol replacement - this is a tick in Unicode. */
+  content: "\2713";
+  color: #fff;
+}
