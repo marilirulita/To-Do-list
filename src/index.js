@@ -25,7 +25,22 @@ tasksList.push(new Task('read', false, (ids += 1)));
 //let check = document.getElementById('id');
 //check.addEventListener('click', statusCompleted(tasksList, id, toggle/class?));
 
+// load page code
+document.addEventListener('DOMContentLoaded',(event) => {
+  console.log("Hello load content!");
+});
 
+window.onload = (event) => {
+  console.log('The page has fully loaded');
+};
+
+// Press enter code
+let textBox = document.getElementById('new-task');
+textBox.addEventListener('keypress', (event) => {
+  if(event.key === "Enter" && textBox.value !== '') {
+    console.log("new task added!");
+  }
+});
 
 // ***********************************************************
 
@@ -40,6 +55,7 @@ const showItems = () => {
     const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
     checkBox.id = task.index;
+    checkBox.name = "listElem";
 
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
@@ -60,10 +76,16 @@ showItems();
 
 // **************************************
 // code for add an event listener to check
-const check = document.getElementById('2');
-
-check.addEventListener('click',function(event) {
-    statusCompleted(tasksList, check.id, true);
+function checkChange(id) {
+  const check = document.getElementById(id);
+  check.addEventListener('change',function(event) { 
+    statusCompleted(tasksList, id, true);
     console.log(tasksList);
-    event.preventDefault();
-});
+   });
+}
+
+  const checkboxes = document.querySelectorAll('input[name="listElem"]');
+  checkboxes.forEach(checks => {
+    checkChange(checks.id);
+  });
+  
