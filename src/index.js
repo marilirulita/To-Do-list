@@ -1,8 +1,7 @@
 import './style.css';
 import {addCheck} from './status'; 
 
-const tasksList = [];
-let ids = 0;
+let tasksList = [];
 
 class Task {
   constructor(description, completed, index) {
@@ -12,24 +11,25 @@ class Task {
   }
 }
 
-// ********************************************************
-// load page code
-document.addEventListener('DOMContentLoaded',(event) => {
-  console.log("Hello load content!");
-});
+function saveList() {
+  window.localStorage.setItem('tasklist', JSON.stringify(tasksList));
+}
 
 window.onload = (event) => {
-  console.log('The page has fully loaded');
+  const local = window.localStorage.getItem('tasklist');
+  if (local != null) {
+    tasksList = JSON.parse(local);
+    showItems();
+  }
 };
 
-// Press enter code
 let textBox = document.getElementById('new-task');
 textBox.addEventListener('keypress', (event) => {
   if(event.key === "Enter" && textBox.value !== '') {
-    tasksList.push(new Task(textBox.value, false, (ids += 1)));
+    tasksList.push(new Task(textBox.value, false, Date.now()));
     textBox.value = "";
     showItems();
-    addCheck(tasksList);
+    saveList()
   }
 });
 
@@ -60,5 +60,7 @@ const showItems = () => {
   deleteButton.type = 'button';
   listItems.appendChild(deleteButton);
 
+  addCheck(tasksList);
+  
   return listItems;
 };
