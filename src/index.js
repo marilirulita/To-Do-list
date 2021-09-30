@@ -52,6 +52,7 @@ const showItems = () => {
 
     const descriptionElem = document.createElement('span');
     descriptionElem.innerText = task.description;
+    descriptionElem.id = "id" + task.index ;
     const checkBox = document.createElement('input');
     checkBox.type = 'checkbox';
     checkBox.id = task.index;
@@ -81,6 +82,7 @@ function checkChange(id) {
   check.addEventListener('change',function(event) { 
     statusCompleted(tasksList, id, this.checked);
     console.log(tasksList);
+    completedTask(id, this.checked);
    });
 }
 
@@ -91,3 +93,13 @@ function checkChange(id) {
   
   // *********************************************
   // code for pass a line trow text of list element
+function completedTask(id, status) {
+  const spanFinished = document.getElementById("id"+id);
+  if(status === true) {
+    spanFinished.classList.add('checked');
+  }
+  else if(status === false){
+    spanFinished.classList.remove('checked');
+  }
+}
+
