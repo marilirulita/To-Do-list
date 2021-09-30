@@ -1,5 +1,5 @@
 import './style.css';
-import {statusCompleted} from './status'; 
+import {addCheck} from './status'; 
 
 const tasksList = [];
 let ids = 0;
@@ -12,19 +12,7 @@ class Task {
   }
 }
 
-tasksList.push(new Task('homework', false, (ids += 1)));
-tasksList.push(new Task('clean', false, (ids += 1)));
-tasksList.push(new Task('read', false, (ids += 1)));
-
-// *********************************************************
-
-// this will change visible or invisible to the list item? maybe?
-// checkBox.classList.toggle('visible');
-
-// this will manage the visible or invisible list elem
-//let check = document.getElementById('id');
-//check.addEventListener('click', statusCompleted(tasksList, id, toggle/class?));
-
+// ********************************************************
 // load page code
 document.addEventListener('DOMContentLoaded',(event) => {
   console.log("Hello load content!");
@@ -38,15 +26,17 @@ window.onload = (event) => {
 let textBox = document.getElementById('new-task');
 textBox.addEventListener('keypress', (event) => {
   if(event.key === "Enter" && textBox.value !== '') {
-    console.log("new task added!");
+    tasksList.push(new Task(textBox.value, false, (ids += 1)));
+    textBox.value = "";
+    showItems();
+    addCheck(tasksList);
   }
 });
-
-// ***********************************************************
 
 const listItems = document.getElementById('list-elem');
 
 const showItems = () => {
+  listItems.innerHTML = '';
   tasksList.forEach((task) => {
     const taskElement = document.createElement('div');
 
@@ -72,34 +62,3 @@ const showItems = () => {
 
   return listItems;
 };
-
-showItems();
-
-// **************************************
-// code for change checked value in array using checkbox
-function checkChange(id) {
-  const check = document.getElementById(id);
-  check.addEventListener('change',function(event) { 
-    statusCompleted(tasksList, id, this.checked);
-    console.log(tasksList);
-    completedTask(id, this.checked);
-   });
-}
-
-  const checkboxes = document.querySelectorAll('input[name="listElem"]');
-  checkboxes.forEach(checks => {
-    checkChange(checks.id);
-  });
-  
-  // *********************************************
-  // code for pass a line trow text of list element
-function completedTask(id, status) {
-  const spanFinished = document.getElementById("id"+id);
-  if(status === true) {
-    spanFinished.classList.add('checked');
-  }
-  else if(status === false){
-    spanFinished.classList.remove('checked');
-  }
-}
-
