@@ -27,6 +27,10 @@ In this project, I built a simple HTML list of To Do tasks. This simple web page
 
 * Clone the repository in order to get a copy of this project
 
+### Check live version
+
+[Live version](https://marilirulita.github.io/To-Do-list/)
+
 ## Authors
 
 #### Mar Bautista
@@ -47,4 +51,3 @@ Give a ⭐️ if you like this project!
 ## 📝 License
 
 This project is [MIT](LICENSE) licensed.
-
