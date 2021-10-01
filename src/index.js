@@ -13,22 +13,22 @@ class Task {
   }
 }
 
-function deleteTask(del, indx) {
-  del.addEventListener('click', () => {
-    tasksList.forEach((task) => {
-      const id = parseInt(indx, 10);
-      if (task.index === id) {
-        const indice = tasksList.indexOf(task);
-        tasksList.splice(indice, 1);
-        ids = tasksList.length;
-        updatePosition(tasksList);
-        showItems();
-        saveList(tasksList);
-        updateCheck(tasksList);
-      }
-    });
+// function for update index of each element position
+function updatePosition(list) {
+  list.forEach((task, id) => {
+    task.index = id + 1;
   });
 }
+
+const updateArray = (list, id, value) => {
+  list.forEach((elem) => {
+    if (id === elem.index) {
+      elem.description = value;
+    }
+  });
+  saveList(list);
+  return list;
+};
 
 // function to edit tasks
 const editTask = (e, list, id) => {
@@ -95,12 +95,6 @@ const showItems = () => {
   return listItems;
 };
 
-const taskDefaul = () => {
-  tasksList.push(new Task('Read', false, (ids += 1)));
-  tasksList.push(new Task('Clean', false, (ids += 1)));
-  tasksList.push(new Task('Run', false, (ids += 1)));
-};
-
 const updateCheck = (list) => {
   const checkboxes = document.querySelectorAll('input[name="listElem"]');
   checkboxes.forEach((checks) => {
@@ -112,6 +106,29 @@ const updateCheck = (list) => {
       }
     });
   });
+};
+
+function deleteTask(del, indx) {
+  del.addEventListener('click', () => {
+    tasksList.forEach((task) => {
+      const id = parseInt(indx, 10);
+      if (task.index === id) {
+        const indice = tasksList.indexOf(task);
+        tasksList.splice(indice, 1);
+        ids = tasksList.length;
+        updatePosition(tasksList);
+        showItems();
+        saveList(tasksList);
+        updateCheck(tasksList);
+      }
+    });
+  });
+}
+
+const taskDefaul = () => {
+  tasksList.push(new Task('Read', false, (ids += 1)));
+  tasksList.push(new Task('Clean', false, (ids += 1)));
+  tasksList.push(new Task('Run', false, (ids += 1)));
 };
 
 window.onload = () => {
@@ -138,16 +155,6 @@ textBox.addEventListener('keypress', (event) => {
   }
 });
 
-const updateArray = (list, id, value) => {
-  list.forEach((elem) => {
-    if (id === elem.index) {
-      elem.description = value;
-    }
-  });
-  saveList(list);
-  return list;
-};
-
 // function for delete items
 
 // function for delete all completed
@@ -159,12 +166,5 @@ function deleteCompleted(elem, list) {
     updatePosition(tasksList);
     showItems();
     saveList(tasksList);
-  });
-}
-
-// function for update index of each element position
-function updatePosition(list) {
-  list.forEach((task, id) => {
-    task.index = id + 1;
   });
 }
