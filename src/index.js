@@ -1,6 +1,7 @@
 import './style.css';
 import { completedTask, addCheck } from './status.js';
 import saveList from './savelist.js';
+import { deleteTask, deleteCompleted } from './deleteItem.js';
 
 let tasksList = [];
 let ids = 0;
@@ -14,7 +15,7 @@ class Task {
 }
 
 // function for update index of each element position
-function updatePosition(list) {
+export function updatePosition(list) {
   list.forEach((task, id) => {
     task.index = id + 1;
   });
@@ -45,7 +46,7 @@ const editTask = (e, list, id) => {
 
     const sibling = d.parentNode.firstChild;
     d.focus();
-    deleteTask(b, sibling.id);
+    deleteTask(b, sibling.id, list);
   });
 
   d.addEventListener('keypress', (event) => {
@@ -60,9 +61,9 @@ const editTask = (e, list, id) => {
 
 const listItems = document.getElementById('list-elem');
 
-const showItems = () => {
+export const showItems = (list) => {
   listItems.innerHTML = '';
-  tasksList.forEach((task) => {
+  list.forEach((task) => {
     const taskElement = document.createElement('div');
 
     const descriptionElem = document.createElement('span');
@@ -73,7 +74,7 @@ const showItems = () => {
     checkBox.id = task.index;
     checkBox.name = 'listElem';
 
-    editTask(descriptionElem, tasksList, task.index);
+    editTask(descriptionElem, list, task.index);
 
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
@@ -86,16 +87,16 @@ const showItems = () => {
   deleteButton.innerText = 'Clear all completed';
   deleteButton.type = 'button';
 
-  deleteCompleted(deleteButton, tasksList);
+  deleteCompleted(deleteButton, list);
 
   listItems.appendChild(deleteButton);
 
-  addCheck(tasksList);
+  addCheck(list);
 
   return listItems;
 };
 
-const updateCheck = (list) => {
+export const updateCheck = (list) => {
   const checkboxes = document.querySelectorAll('input[name="listElem"]');
   checkboxes.forEach((checks) => {
     list.forEach((elem) => {
@@ -107,23 +108,6 @@ const updateCheck = (list) => {
     });
   });
 };
-
-function deleteTask(del, indx) {
-  del.addEventListener('click', () => {
-    tasksList.forEach((task) => {
-      const id = parseInt(indx, 10);
-      if (task.index === id) {
-        const indice = tasksList.indexOf(task);
-        tasksList.splice(indice, 1);
-        ids = tasksList.length;
-        updatePosition(tasksList);
-        showItems();
-        saveList(tasksList);
-        updateCheck(tasksList);
-      }
-    });
-  });
-}
 
 const taskDefaul = () => {
   tasksList.push(new Task('Read', false, (ids += 1)));
@@ -139,32 +123,21 @@ window.onload = () => {
     taskDefaul();
   }
   ids = tasksList.length;
-  showItems();
+  showItems(tasksList);
   saveList(tasksList);
   updateCheck(tasksList);
 };
 
 const textBox = document.getElementById('new-task');
 textBox.addEventListener('keypress', (event) => {
+  const local = window.localStorage.getItem('tasklist');
+  tasksList = JSON.parse(local);
   if (event.key === 'Enter' && textBox.value !== '') {
+    ids = tasksList.length;
     tasksList.push(new Task(textBox.value, false, (ids += 1)));
     textBox.value = '';
-    showItems();
+    showItems(tasksList);
     saveList(tasksList);
     updateCheck(tasksList);
   }
 });
-
-// function for delete items
-
-// function for delete all completed
-function deleteCompleted(elem, list) {
-  elem.addEventListener('click', () => {
-    const newList = list.filter((task) => task.completed === false);
-    tasksList = newList;
-    ids = tasksList.length;
-    updatePosition(tasksList);
-    showItems();
-    saveList(tasksList);
-  });
-}
