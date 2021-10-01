@@ -2,7 +2,9 @@ import saveList from './savelist.js';
 
 const statusCompleted = (list, id, status) => {
   list.forEach((elem) => {
-    if (elem.index == id) {
+    const ids = parseInt(elem.index, 10);
+    const listId = parseInt(id, 10);
+    if (ids === listId) {
       elem.completed = status;
     }
   });
@@ -12,9 +14,10 @@ const statusCompleted = (list, id, status) => {
 
 const completedTask = (id, status) => {
   const spanFinished = document.getElementById(`id${id}`);
-  if (status == true) {
+  const statStri = status.toString();
+  if (statStri === 'true') {
     spanFinished.classList.add('checked');
-  } else if (status == false) {
+  } else if (statStri === 'false') {
     spanFinished.classList.remove('checked');
   }
 };

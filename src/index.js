@@ -54,7 +54,8 @@ const updateCheck = (list) => {
   const checkboxes = document.querySelectorAll('input[name="listElem"]');
   checkboxes.forEach((checks) => {
     list.forEach((elem) => {
-      if (checks.id == elem.index) {
+      const ids = parseInt(checks.id, 10);
+      if (ids === elem.index) {
         checks.checked = elem.completed;
         completedTask(checks.id, elem.completed);
       }
