@@ -14,13 +14,6 @@ class Task {
   }
 }
 
-// function for update index of each element position
-export function updatePosition(list) {
-  list.forEach((task, id) => {
-    task.index = id + 1;
-  });
-}
-
 const updateArray = (list, id, value) => {
   list.forEach((elem) => {
     if (id === elem.index) {

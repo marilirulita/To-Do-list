@@ -1,5 +1,12 @@
-import { updatePosition, showItems, updateCheck } from './index.js';
+import { showItems, updateCheck } from './index.js';
 import saveList from './savelist.js';
+
+// function for update index of each element position
+function updatePosition(list) {
+  list.forEach((task, id) => {
+    task.index = id + 1;
+  });
+}
 
 export function deleteTask(del, indx, list) {
   del.addEventListener('click', () => {
