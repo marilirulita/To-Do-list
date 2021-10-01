@@ -6,16 +6,15 @@ const statusCompleted = (list, id, status) => {
       elem.completed = status;
     }
   });
-  console.log(list);
   saveList();
   return list;
 };
 
 const completedTask = (id, status) => {
   const spanFinished = document.getElementById(`id${id}`);
-  if (status === true) {
+  if (status == true) {
     spanFinished.classList.add('checked');
-  } else if (status === false) {
+  } else if (status == false) {
     spanFinished.classList.remove('checked');
   }
 };
@@ -30,4 +29,4 @@ const addCheck = (list) => {
   });
 };
 
-export { addCheck as default };
+export { addCheck, completedTask };

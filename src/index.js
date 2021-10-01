@@ -1,5 +1,5 @@
 import './style.css';
-import addCheck from './status.js';
+import { addCheck, completedTask } from './status.js';
 
 let tasksList = [];
 
@@ -14,7 +14,7 @@ class Task {
 export const saveList = () => {
   window.localStorage.setItem('tasklist', JSON.stringify(tasksList));
 }
-//window.localStorage.removeItem('tasklist');
+
 const listItems = document.getElementById('list-elem');
 
 const showItems = () => {
@@ -51,13 +51,13 @@ window.onload = () => {
   const local = window.localStorage.getItem('tasklist');
   if (local != null) {
     tasksList = JSON.parse(local);
-    showItems();
   }
   else {
     taskDefaul();
-    showItems();
   }
+  showItems();
   saveList();
+  updateCheck(tasksList);
 };
 
 const textBox = document.getElementById('new-task');
@@ -67,6 +67,7 @@ textBox.addEventListener('keypress', (event) => {
     textBox.value = '';
     showItems();
     saveList();
+    updateCheck(tasksList);
   }
 });
 
@@ -74,4 +75,16 @@ const taskDefaul = () => {
   tasksList.push(new Task('Read', false, 1));
   tasksList.push(new Task('Clean', false, 2));
   tasksList.push(new Task('Run', false, 3));
+}
+
+const updateCheck = (list) => {
+  const checkboxes = document.querySelectorAll('input[name="listElem"]');
+  checkboxes.forEach((checks) => {
+    list.forEach(elem => {
+      if(checks.id == elem.index) {
+        checks.checked = elem.completed;
+        completedTask(checks.id, elem.completed);
+      }
+    })
+  });
 }
