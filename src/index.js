@@ -26,6 +26,8 @@ const showItems = () => {
     checkBox.type = 'checkbox';
     checkBox.id = task.index;
     checkBox.name = 'listElem';
+  
+    editTask(descriptionElem);
 
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
@@ -85,3 +87,29 @@ textBox.addEventListener('keypress', (event) => {
     updateCheck(tasksList);
   }
 });
+
+// function to edit tasks
+function editTask(e) {
+  let d = document.createElement('input');
+  d.type = 'text';
+
+  e.addEventListener('click', function() {
+	  d.value = e.innerHTML;
+    e.parentNode.replaceChild(d, e);
+    d.focus();
+  });
+
+  d.addEventListener('keypress', (event) => {
+	  if (event.key === 'Enter') {
+      e.innerHTML = d.value;
+      d.parentNode.replaceChild(e, d);
+    }
+  });
+}
+
+// checkboxes.forEach((checks) => {
+  //  checks.onchange = function func() {
+    //  statusCompleted(list, checks.id, this.checked);
+      //completedTask(checks.id, this.checked);
+//    };
+  //});
