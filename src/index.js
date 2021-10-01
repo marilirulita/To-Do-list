@@ -13,6 +13,51 @@ class Task {
   }
 }
 
+function deleteTask(del, indx) {
+  del.addEventListener('click', () => {
+    tasksList.forEach((task) => {
+      const id = parseInt(indx, 10);
+      if (task.index === id) {
+        const indice = tasksList.indexOf(task);
+        tasksList.splice(indice, 1);
+        ids = tasksList.length;
+        updatePosition(tasksList);
+        showItems();
+        saveList(tasksList);
+        updateCheck(tasksList);
+      }
+    });
+  });
+}
+
+// function to edit tasks
+const editTask = (e, list, id) => {
+  const d = document.createElement('input');
+  d.type = 'text';
+  const b = document.createElement('input');
+  b.type = 'button';
+  b.value = 'delete';
+
+  e.addEventListener('click', () => {
+    d.value = e.innerHTML;
+    e.parentNode.replaceChild(d, e);
+    d.parentNode.appendChild(b);
+
+    const sibling = d.parentNode.firstChild;
+    d.focus();
+    deleteTask(b, sibling.id);
+  });
+
+  d.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+      e.innerHTML = d.value;
+      d.parentNode.replaceChild(e, d);
+      e.parentNode.removeChild(b);
+      updateArray(list, id, d.value);
+    }
+  });
+};
+
 const listItems = document.getElementById('list-elem');
 
 const showItems = () => {
@@ -77,7 +122,6 @@ window.onload = () => {
     taskDefaul();
   }
   ids = tasksList.length;
-  console.log(ids);
   showItems();
   saveList(tasksList);
   updateCheck(tasksList);
@@ -94,34 +138,6 @@ textBox.addEventListener('keypress', (event) => {
   }
 });
 
-// function to edit tasks
-function editTask(e, list, id) {
-  const d = document.createElement('input');
-  d.type = 'text';
-  const b = document.createElement('input');
-  b.type = 'button';
-  b.value = 'delete';
-
-  e.addEventListener('click', () => {
-	  d.value = e.innerHTML;
-    e.parentNode.replaceChild(d, e);
-    d.parentNode.appendChild(b);
-
-    const sibling = d.parentNode.firstChild;
-    d.focus();
-    deleteTask(b, sibling.id);
-  });
-
-  d.addEventListener('keypress', (event) => {
-	  if (event.key === 'Enter') {
-      e.innerHTML = d.value;
-      d.parentNode.replaceChild(e, d);
-      e.parentNode.removeChild(b);
-      updateArray(list, id, d.value);
-    }
-  });
-}
-
 const updateArray = (list, id, value) => {
   list.forEach((elem) => {
     if (id === elem.index) {
@@ -133,27 +149,11 @@ const updateArray = (list, id, value) => {
 };
 
 // function for delete items
-function deleteTask(del, indx) {
-  del.addEventListener('click', () => {
-    tasksList.forEach((task) => {
-      if (task.index == indx) {
-        const indice = tasksList.indexOf(task);
-        tasksList.splice(indice, 1);
-        ids = tasksList.length;
-        updatePosition(tasksList);
-        console.log(tasksList);
-        showItems();
-        saveList(tasksList);
-        updateCheck(tasksList);
-      }
-    });
-  });
-}
 
 // function for delete all completed
 function deleteCompleted(elem, list) {
   elem.addEventListener('click', () => {
-    const newList = list.filter((task) => task.completed == false);
+    const newList = list.filter((task) => task.completed === false);
     tasksList = newList;
     ids = tasksList.length;
     updatePosition(tasksList);
