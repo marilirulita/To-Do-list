@@ -92,14 +92,18 @@ textBox.addEventListener('keypress', (event) => {
 function editTask(e, list, id) {
   let d = document.createElement('input');
   d.type = 'text';
-  let b = document.createElement('a');
-  b.textContent = "delete";
+  let b = document.createElement('input');
+  b.type = 'button';
+  b.value = "delete";
 
   e.addEventListener('click', function() {
 	  d.value = e.innerHTML;
     e.parentNode.replaceChild(d, e);
     d.parentNode.appendChild(b);
+
+    let sibling  = d.parentNode.firstChild;
     d.focus();
+    deleteTask(b, sibling.id);
   });
 
   d.addEventListener('keypress', (event) => {
@@ -123,8 +127,16 @@ function editTask(e, list, id) {
   };
 
   // function for delete items
-  function deleteTask() {
-    let d = document.createElement('a');
-    d.innerHTML = "delete";
-
+  function deleteTask(del, indx) {
+    del.addEventListener('click', function() {
+      tasksList.forEach(task => {
+        if(task.index == indx) {
+          var indice = tasksList.indexOf(task);
+          tasksList.splice(indice, 1);
+          console.log(tasksList);
+          showItems();
+          saveList(tasksList);
+        }
+      })
+    })
   }
