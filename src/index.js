@@ -1,7 +1,7 @@
 import './style.css';
 import { completedTask, addCheck } from './status.js';
 import saveList from './savelist.js';
-import { deleteTask} from './deleteItem.js';
+import editTask from './edit.js';
 
 let tasksList = [];
 let ids = 0;
@@ -13,44 +13,6 @@ class Task {
     this.index = index;
   }
 }
-
-const updateArray = (list, id, value) => {
-  list.forEach((elem) => {
-    if (id === elem.index) {
-      elem.description = value;
-    }
-  });
-  saveList(list);
-  return list;
-};
-
-// function to edit tasks
-const editTask = (e, list, id) => {
-  const d = document.createElement('input');
-  d.type = 'text';
-  const b = document.createElement('input');
-  b.type = 'button';
-  b.value = 'delete';
-
-  e.addEventListener('click', () => {
-    d.value = e.innerHTML;
-    e.parentNode.replaceChild(d, e);
-    d.parentNode.appendChild(b);
-
-    const sibling = d.parentNode.firstChild;
-    d.focus();
-    deleteTask(b, sibling.id, list);
-  });
-
-  d.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      e.innerHTML = d.value;
-      d.parentNode.replaceChild(e, d);
-      e.parentNode.removeChild(b);
-      updateArray(list, id, d.value);
-    }
-  });
-};
 
 const listItems = document.getElementById('list-elem');
 

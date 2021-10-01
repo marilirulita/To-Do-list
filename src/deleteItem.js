@@ -8,14 +8,13 @@ function updatePosition(list) {
   });
 }
 
-export function deleteTask(del, indx, list) {
+export default function deleteTask(del, indx, list) {
   del.addEventListener('click', () => {
     list.forEach((task) => {
       const id = parseInt(indx, 10);
       if (task.index === id) {
         const indice = list.indexOf(task);
         list.splice(indice, 1);
-        let ids = list.length;
         updatePosition(list);
         showItems(list);
         saveList(list);
@@ -27,16 +26,15 @@ export function deleteTask(del, indx, list) {
 
 // function for delete all completed
 function deleteCompleted() {
-  const deletButon = document.getElementById('deleteButton')
+  const deletButon = document.getElementById('deleteButton');
   deletButon.addEventListener('click', () => {
     const local = window.localStorage.getItem('tasklist');
-    let list = JSON.parse(local);
+    const list = JSON.parse(local);
     const newList = list.filter((task) => task.completed === false);
-    let ids = newList.length;
     updatePosition(newList);
     showItems(newList);
     saveList(newList);
   });
 }
 
-deleteCompleted()
+deleteCompleted();
