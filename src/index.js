@@ -27,8 +27,8 @@ const showItems = () => {
     checkBox.type = 'checkbox';
     checkBox.id = task.index;
     checkBox.name = 'listElem';
-  
-    editTask(descriptionElem, tasksList, task.index)
+
+    editTask(descriptionElem, tasksList, task.index);
 
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
@@ -44,7 +44,7 @@ const showItems = () => {
   deleteCompleted(deleteButton, tasksList);
 
   listItems.appendChild(deleteButton);
-  
+
   addCheck(tasksList);
 
   return listItems;
@@ -96,18 +96,18 @@ textBox.addEventListener('keypress', (event) => {
 
 // function to edit tasks
 function editTask(e, list, id) {
-  let d = document.createElement('input');
+  const d = document.createElement('input');
   d.type = 'text';
-  let b = document.createElement('input');
+  const b = document.createElement('input');
   b.type = 'button';
-  b.value = "delete";
+  b.value = 'delete';
 
-  e.addEventListener('click', function() {
+  e.addEventListener('click', () => {
 	  d.value = e.innerHTML;
     e.parentNode.replaceChild(d, e);
     d.parentNode.appendChild(b);
 
-    let sibling  = d.parentNode.firstChild;
+    const sibling = d.parentNode.firstChild;
     d.focus();
     deleteTask(b, sibling.id);
   });
@@ -122,49 +122,49 @@ function editTask(e, list, id) {
   });
 }
 
-  const updateArray = (list, id, value) => {
-    list.forEach((elem) => {
-      if (id === elem.index) {
-        elem.description = value;
+const updateArray = (list, id, value) => {
+  list.forEach((elem) => {
+    if (id === elem.index) {
+      elem.description = value;
+    }
+  });
+  saveList(list);
+  return list;
+};
+
+// function for delete items
+function deleteTask(del, indx) {
+  del.addEventListener('click', () => {
+    tasksList.forEach((task) => {
+      if (task.index == indx) {
+        const indice = tasksList.indexOf(task);
+        tasksList.splice(indice, 1);
+        ids = tasksList.length;
+        updatePosition(tasksList);
+        console.log(tasksList);
+        showItems();
+        saveList(tasksList);
+        updateCheck(tasksList);
       }
     });
-    saveList(list);
-    return list;
-  };
+  });
+}
 
-  // function for delete items
-  function deleteTask(del, indx) {
-    del.addEventListener('click', function() {
-      tasksList.forEach(task => {
-        if(task.index == indx) {
-          let indice = tasksList.indexOf(task);
-          tasksList.splice(indice, 1);
-          ids = tasksList.length;
-          updatePosition(tasksList);
-          console.log(tasksList);
-          showItems();
-          saveList(tasksList);
-          updateCheck(tasksList);
-        }
-      })
-    })
-  }
+// function for delete all completed
+function deleteCompleted(elem, list) {
+  elem.addEventListener('click', () => {
+    const newList = list.filter((task) => task.completed == false);
+    tasksList = newList;
+    ids = tasksList.length;
+    updatePosition(tasksList);
+    showItems();
+    saveList(tasksList);
+  });
+}
 
-  // function for delete all completed
-  function deleteCompleted(elem, list) {
-    elem.addEventListener('click', function() {
-      const newList = list.filter(task => task.completed == false);
-      tasksList = newList;
-      ids = tasksList.length;
-      updatePosition(tasksList);
-      showItems();
-      saveList(tasksList);
-    });
-  }
-
-  // function for update index of each element position
-  function updatePosition(list) {
-    list.forEach((task, id) => {
-      task.index = id + 1;
-    })
-  }
+// function for update index of each element position
+function updatePosition(list) {
+  list.forEach((task, id) => {
+    task.index = id + 1;
+  });
+}
