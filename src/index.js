@@ -3,6 +3,7 @@ import { completedTask, addCheck } from './status.js';
 import saveList from './savelist.js';
 
 let tasksList = [];
+let ids = 0;
 
 class Task {
   constructor(description, completed, index) {
@@ -50,9 +51,9 @@ const showItems = () => {
 };
 
 const taskDefaul = () => {
-  tasksList.push(new Task('Read', false, 1));
-  tasksList.push(new Task('Clean', false, 2));
-  tasksList.push(new Task('Run', false, 3));
+  tasksList.push(new Task('Read', false, (ids += 1)));
+  tasksList.push(new Task('Clean', false, (ids += 1)));
+  tasksList.push(new Task('Run', false, (ids += 1)));
 };
 
 const updateCheck = (list) => {
@@ -75,6 +76,8 @@ window.onload = () => {
   } else {
     taskDefaul();
   }
+  ids = tasksList.length;
+  console.log(ids);
   showItems();
   saveList(tasksList);
   updateCheck(tasksList);
@@ -83,7 +86,7 @@ window.onload = () => {
 const textBox = document.getElementById('new-task');
 textBox.addEventListener('keypress', (event) => {
   if (event.key === 'Enter' && textBox.value !== '') {
-    tasksList.push(new Task(textBox.value, false, Date.now()));
+    tasksList.push(new Task(textBox.value, false, (ids += 1)));
     textBox.value = '';
     showItems();
     saveList(tasksList);
@@ -134,8 +137,10 @@ function editTask(e, list, id) {
     del.addEventListener('click', function() {
       tasksList.forEach(task => {
         if(task.index == indx) {
-          var indice = tasksList.indexOf(task);
+          let indice = tasksList.indexOf(task);
           tasksList.splice(indice, 1);
+          ids = tasksList.length;
+          updatePosition(tasksList);
           console.log(tasksList);
           showItems();
           saveList(tasksList);
@@ -150,7 +155,16 @@ function editTask(e, list, id) {
     elem.addEventListener('click', function() {
       const newList = list.filter(task => task.completed == false);
       tasksList = newList;
+      ids = tasksList.length;
+      updatePosition(tasksList);
       showItems();
       saveList(tasksList);
     });
+  }
+
+  // function for update index of each element position
+  function updatePosition(list) {
+    list.forEach((task, id) => {
+      task.index = id + 1;
+    })
   }
