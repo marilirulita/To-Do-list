@@ -1,4 +1,6 @@
+/* eslint-disable */
 import { showItems, updateCheck } from './index.js';
+/* eslint-enable */
 import saveList from './savelist.js';
 
 // function for update index of each element position

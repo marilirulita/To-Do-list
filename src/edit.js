@@ -1,4 +1,6 @@
+/* eslint-disable */
 import deleteTask from './deleteItem.js';
+/* eslint-enable */
 import saveList from './savelist.js';
 
 const updateArray = (list, id, value) => {

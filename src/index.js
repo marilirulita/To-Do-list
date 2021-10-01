@@ -1,7 +1,9 @@
 import './style.css';
 import { completedTask, addCheck } from './status.js';
 import saveList from './savelist.js';
-import editTask from './edit.js';
+/* eslint-disable */
+import editTask from './edit.js';   
+/* eslint-enable */
 
 let tasksList = [];
 let ids = 0;
