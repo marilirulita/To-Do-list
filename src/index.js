@@ -27,7 +27,8 @@ const showItems = () => {
     checkBox.id = task.index;
     checkBox.name = 'listElem';
   
-    editTask(descriptionElem);
+    editTask(descriptionElem, tasksList, task.index)
+//    editTask(descriptionElem);
 
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
@@ -89,7 +90,7 @@ textBox.addEventListener('keypress', (event) => {
 });
 
 // function to edit tasks
-function editTask(e) {
+function editTask(e, list, id) {
   let d = document.createElement('input');
   d.type = 'text';
 
@@ -103,13 +104,18 @@ function editTask(e) {
 	  if (event.key === 'Enter') {
       e.innerHTML = d.value;
       d.parentNode.replaceChild(e, d);
+      updateArray(list, id, d.value);
     }
   });
+
 }
 
-// checkboxes.forEach((checks) => {
-  //  checks.onchange = function func() {
-    //  statusCompleted(list, checks.id, this.checked);
-      //completedTask(checks.id, this.checked);
-//    };
-  //});
+  const updateArray = (list, id, value) => {
+    list.forEach((elem) => {
+      if (id === elem.index) {
+        elem.description = value;
+      }
+    });
+    saveList(list);
+    return list;
+  };
