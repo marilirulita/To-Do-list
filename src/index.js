@@ -28,7 +28,6 @@ const showItems = () => {
     checkBox.name = 'listElem';
   
     editTask(descriptionElem, tasksList, task.index)
-//    editTask(descriptionElem);
 
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
@@ -93,10 +92,13 @@ textBox.addEventListener('keypress', (event) => {
 function editTask(e, list, id) {
   let d = document.createElement('input');
   d.type = 'text';
+  let b = document.createElement('a');
+  b.textContent = "delete";
 
   e.addEventListener('click', function() {
 	  d.value = e.innerHTML;
     e.parentNode.replaceChild(d, e);
+    d.parentNode.appendChild(b);
     d.focus();
   });
 
@@ -104,10 +106,10 @@ function editTask(e, list, id) {
 	  if (event.key === 'Enter') {
       e.innerHTML = d.value;
       d.parentNode.replaceChild(e, d);
+      e.parentNode.removeChild(b);
       updateArray(list, id, d.value);
     }
   });
-
 }
 
   const updateArray = (list, id, value) => {
@@ -119,3 +121,10 @@ function editTask(e, list, id) {
     saveList(list);
     return list;
   };
+
+  // function for delete items
+  function deleteTask() {
+    let d = document.createElement('a');
+    d.innerHTML = "delete";
+
+  }
