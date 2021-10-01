@@ -1,5 +1,6 @@
 import './style.css';
-import { addCheck, completedTask } from './status.js';
+import { completedTask, addCheck } from './status.js';
+import saveList from './savelist.js';
 
 let tasksList = [];
 
@@ -9,10 +10,6 @@ class Task {
     this.completed = completed;
     this.index = index;
   }
-}
-
-export const saveList = () => {
-  window.localStorage.setItem('tasklist', JSON.stringify(tasksList));
 }
 
 const listItems = document.getElementById('list-elem');
@@ -47,16 +44,33 @@ const showItems = () => {
   return listItems;
 };
 
+const taskDefaul = () => {
+  tasksList.push(new Task('Read', false, 1));
+  tasksList.push(new Task('Clean', false, 2));
+  tasksList.push(new Task('Run', false, 3));
+};
+
+const updateCheck = (list) => {
+  const checkboxes = document.querySelectorAll('input[name="listElem"]');
+  checkboxes.forEach((checks) => {
+    list.forEach((elem) => {
+      if (checks.id == elem.index) {
+        checks.checked = elem.completed;
+        completedTask(checks.id, elem.completed);
+      }
+    });
+  });
+};
+
 window.onload = () => {
   const local = window.localStorage.getItem('tasklist');
   if (local != null) {
     tasksList = JSON.parse(local);
-  }
-  else {
+  } else {
     taskDefaul();
   }
   showItems();
-  saveList();
+  saveList(tasksList);
   updateCheck(tasksList);
 };
 
@@ -66,25 +80,7 @@ textBox.addEventListener('keypress', (event) => {
     tasksList.push(new Task(textBox.value, false, Date.now()));
     textBox.value = '';
     showItems();
-    saveList();
+    saveList(tasksList);
     updateCheck(tasksList);
   }
 });
-
-const taskDefaul = () => {
-  tasksList.push(new Task('Read', false, 1));
-  tasksList.push(new Task('Clean', false, 2));
-  tasksList.push(new Task('Run', false, 3));
-}
-
-const updateCheck = (list) => {
-  const checkboxes = document.querySelectorAll('input[name="listElem"]');
-  checkboxes.forEach((checks) => {
-    list.forEach(elem => {
-      if(checks.id == elem.index) {
-        checks.checked = elem.completed;
-        completedTask(checks.id, elem.completed);
-      }
-    })
-  });
-}

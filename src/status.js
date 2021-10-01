@@ -1,4 +1,4 @@
-import {saveList} from './index.js';
+import saveList from './savelist.js';
 
 const statusCompleted = (list, id, status) => {
   list.forEach((elem) => {
@@ -6,7 +6,7 @@ const statusCompleted = (list, id, status) => {
       elem.completed = status;
     }
   });
-  saveList();
+  saveList(list);
   return list;
 };
 
@@ -29,4 +29,4 @@ const addCheck = (list) => {
   });
 };
 
-export { addCheck, completedTask };
+export { completedTask, addCheck };
