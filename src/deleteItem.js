@@ -26,14 +26,17 @@ export function deleteTask(del, indx, list) {
 }
 
 // function for delete all completed
-export function deleteCompleted(elem, list) {
-  elem.addEventListener('click', () => {
+function deleteCompleted() {
+  const deletButon = document.getElementById('deleteButton')
+  deletButon.addEventListener('click', () => {
+    const local = window.localStorage.getItem('tasklist');
+    let list = JSON.parse(local);
     const newList = list.filter((task) => task.completed === false);
-    console.log(list);
-    console.log(newList);
     let ids = newList.length;
     updatePosition(newList);
     showItems(newList);
     saveList(newList);
   });
 }
+
+deleteCompleted()

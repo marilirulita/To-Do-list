@@ -1,7 +1,7 @@
 import './style.css';
 import { completedTask, addCheck } from './status.js';
 import saveList from './savelist.js';
-import { deleteTask, deleteCompleted } from './deleteItem.js';
+import { deleteTask} from './deleteItem.js';
 
 let tasksList = [];
 let ids = 0;
@@ -74,15 +74,6 @@ export const showItems = (list) => {
     taskElement.appendChild(descriptionElem);
     listItems.appendChild(taskElement);
   });
-
-  const deleteButton = document.createElement('button');
-  deleteButton.classList.add('delete-button');
-  deleteButton.innerText = 'Clear all completed';
-  deleteButton.type = 'button';
-
-  deleteCompleted(deleteButton, list);
-
-  listItems.appendChild(deleteButton);
 
   addCheck(list);
 
