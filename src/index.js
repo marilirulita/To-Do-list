@@ -39,8 +39,11 @@ const showItems = () => {
   deleteButton.classList.add('delete-button');
   deleteButton.innerText = 'Clear all completed';
   deleteButton.type = 'button';
-  listItems.appendChild(deleteButton);
 
+  deleteCompleted(deleteButton, tasksList);
+
+  listItems.appendChild(deleteButton);
+  
   addCheck(tasksList);
 
   return listItems;
@@ -136,7 +139,18 @@ function editTask(e, list, id) {
           console.log(tasksList);
           showItems();
           saveList(tasksList);
+          updateCheck(tasksList);
         }
       })
     })
+  }
+
+  // function for delete all completed
+  function deleteCompleted(elem, list) {
+    elem.addEventListener('click', function() {
+      const newList = list.filter(task => task.completed == false);
+      tasksList = newList;
+      showItems();
+      saveList(tasksList);
+    });
   }
