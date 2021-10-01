@@ -11,10 +11,10 @@ class Task {
   }
 }
 
-function saveList() {
+export const saveList = () => {
   window.localStorage.setItem('tasklist', JSON.stringify(tasksList));
 }
-
+//window.localStorage.removeItem('tasklist');
 const listItems = document.getElementById('list-elem');
 
 const showItems = () => {
@@ -53,6 +53,11 @@ window.onload = () => {
     tasksList = JSON.parse(local);
     showItems();
   }
+  else {
+    taskDefaul();
+    showItems();
+  }
+  saveList();
 };
 
 const textBox = document.getElementById('new-task');
@@ -64,3 +69,9 @@ textBox.addEventListener('keypress', (event) => {
     saveList();
   }
 });
+
+const taskDefaul = () => {
+  tasksList.push(new Task('Read', false, 1));
+  tasksList.push(new Task('Clean', false, 2));
+  tasksList.push(new Task('Run', false, 3));
+}

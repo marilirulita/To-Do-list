@@ -1,9 +1,13 @@
+import {saveList} from './index.js';
+
 const statusCompleted = (list, id, status) => {
   list.forEach((elem) => {
-    if (elem.index === id) {
+    if (elem.index == id) {
       elem.completed = status;
     }
   });
+  console.log(list);
+  saveList();
   return list;
 };
 
