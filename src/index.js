@@ -57,20 +57,12 @@ export const updateCheck = (list) => {
   });
 };
 
-const taskDefaul = () => {
-  tasksList.push(new Task('Read', false, (ids += 1)));
-  tasksList.push(new Task('Clean', false, (ids += 1)));
-  tasksList.push(new Task('Run', false, (ids += 1)));
-};
-
 window.onload = () => {
   const local = window.localStorage.getItem('tasklist');
   if (local != null) {
     tasksList = JSON.parse(local);
-  } else {
-    taskDefaul();
+    ids = tasksList.length;
   }
-  ids = tasksList.length;
   showItems(tasksList);
   saveList(tasksList);
   updateCheck(tasksList);
