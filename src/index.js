@@ -1,8 +1,12 @@
 import './style.css';
 import { completedTask, addCheck } from './status.js';
 import saveList from './savelist.js';
+/* eslint-disable */
+import editTask from './edit.js';   
+/* eslint-enable */
 
 let tasksList = [];
+let ids = 0;
 
 class Task {
   constructor(description, completed, index) {
@@ -14,9 +18,9 @@ class Task {
 
 const listItems = document.getElementById('list-elem');
 
-const showItems = () => {
+export const showItems = (list) => {
   listItems.innerHTML = '';
-  tasksList.forEach((task) => {
+  list.forEach((task) => {
     const taskElement = document.createElement('div');
 
     const descriptionElem = document.createElement('span');
@@ -27,30 +31,20 @@ const showItems = () => {
     checkBox.id = task.index;
     checkBox.name = 'listElem';
 
+    editTask(descriptionElem, list, task.index);
+
     taskElement.classList.add('task-element');
     taskElement.appendChild(checkBox);
     taskElement.appendChild(descriptionElem);
     listItems.appendChild(taskElement);
   });
 
-  const deleteButton = document.createElement('button');
-  deleteButton.classList.add('delete-button');
-  deleteButton.innerText = 'Clear all completed';
-  deleteButton.type = 'button';
-  listItems.appendChild(deleteButton);
-
-  addCheck(tasksList);
+  addCheck(list);
 
   return listItems;
 };
 
-const taskDefaul = () => {
-  tasksList.push(new Task('Read', false, 1));
-  tasksList.push(new Task('Clean', false, 2));
-  tasksList.push(new Task('Run', false, 3));
-};
-
-const updateCheck = (list) => {
+export const updateCheck = (list) => {
   const checkboxes = document.querySelectorAll('input[name="listElem"]');
   checkboxes.forEach((checks) => {
     list.forEach((elem) => {
@@ -67,20 +61,22 @@ window.onload = () => {
   const local = window.localStorage.getItem('tasklist');
   if (local != null) {
     tasksList = JSON.parse(local);
-  } else {
-    taskDefaul();
+    ids = tasksList.length;
   }
-  showItems();
+  showItems(tasksList);
   saveList(tasksList);
   updateCheck(tasksList);
 };
 
 const textBox = document.getElementById('new-task');
 textBox.addEventListener('keypress', (event) => {
+  const local = window.localStorage.getItem('tasklist');
+  tasksList = JSON.parse(local);
   if (event.key === 'Enter' && textBox.value !== '') {
-    tasksList.push(new Task(textBox.value, false, Date.now()));
+    ids = tasksList.length;
+    tasksList.push(new Task(textBox.value, false, (ids += 1)));
     textBox.value = '';
-    showItems();
+    showItems(tasksList);
     saveList(tasksList);
     updateCheck(tasksList);
   }
