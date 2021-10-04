@@ -5,6 +5,7 @@ module.exports = {
   mode: 'production',
   entry: './src/index.js',
   output: {
+    publicPath: "/To-Do-List/",
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
