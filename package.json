@@ -1,6 +1,5 @@
 {
   "homepage":"https://marilirulita.github.io/To-Do-list/",
-  "name": "To-Do-list",
   "version": "1.0.0",
   "description": "In this project, I built a simple HTML list of To Do tasks. This simple web page was built using webpack and served by a webpack dev server.",
   "private": true,
