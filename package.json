@@ -4,6 +4,8 @@
   "description": "In this project, I built a simple HTML list of To Do tasks. This simple web page was built using webpack and served by a webpack dev server.",
   "private": true,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open",
     "build": "webpack"
@@ -18,13 +20,14 @@
   "bugs": {
     "url": "https://github.com/marilirulita/To-Do-list/issues"
   },
-  "homepage": "https://github.com/marilirulita/To-Do-list#readme",
+  "homepage": "https://github.com/marilirulita/To-Do-list",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.3.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.24.2",
+    "gh-pages": "^3.2.3",
     "hint": "^6.1.4",
     "html-webpack-plugin": "^5.3.2",
     "style-loader": "^3.3.0",
